@@ -248,8 +248,8 @@ void nat64_ipv6_input(struct sk_buff *old_skb)
 	skb_pull(old_skb, sizeof(struct ipv6hdr));
 	proto = ip6h->nexthdr;
 
-	//printk("NAT64: Incoming packet properties: [nexthdr = %d] [payload_len = %d] [old_skb->len = %d]\n", ip6h->nexthdr, ntohs(ip6h->payload_len), old_skb->len);
-	//pr_debug("NAT64: Target registration information min_ip = %d, max_ip = %d\n", info->min_ip, info->max_ip);
+	printk("NAT64: Incoming packet properties: [nexthdr = %d] [payload_len = %d] [old_skb->len = %d]\n", ip6h->nexthdr, ntohs(ip6h->payload_len), old_skb->len);
+	// pr_debug("NAT64: Target registration information min_ip = %d, max_ip = %d\n", info->min_ip, info->max_ip);
 
 	clean_expired_sessions(&exipry_queue);
 	for (i = 0; i < NUM_EXPIRY_QUEUES; i++)
@@ -660,11 +660,12 @@ static inline unsigned int nat64_handle_icmp4(struct sk_buff *skb, struct iphdr 
 unsigned int nat64_ipv4_input(struct sk_buff *skb)
 {
 	struct iphdr	*iph = ip_hdr(skb);
+	printk("nat64: [ipv4] Got IPv4 packet (len %d). before check\n", skb->len);
 
 	if(skb->len < sizeof(struct iphdr) || iph->version != 4 || (iph->daddr & ipv4_netmask) != ipv4_addr)
 		return NF_ACCEPT;
 
-	//printk("nat64: [ipv4] Got IPv4 packet (len %d).\n", skb->len);
+	printk("nat64: [ipv4] Got IPv4 packet (len %d).\n", skb->len);
 
 	skb_pull(skb, ip_hdrlen(skb));
 	skb_reset_transport_header(skb);

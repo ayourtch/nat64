@@ -74,10 +74,6 @@ static inline void csum_inv_substract(__be16 *sum, __be16 *start, __be16 *end)
 	*sum = (new_sum & 0xffff) + (new_sum >> 16);
 }
 
-static inline void ipv6_addr_copy(struct in6_addr *a1, const struct in6_addr *a2)
-{
-        memcpy(a1, a2, sizeof(struct in6_addr));
-}
 
 static inline void factory_translate_ip4(struct sk_buff *src, struct sk_buff *dst, struct in6_addr *saddr, struct in6_addr *daddr, __u8 nexthdr, int len)
 {
