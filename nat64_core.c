@@ -3,6 +3,7 @@
 #include <linux/init.h>
 #include <linux/ip.h>
 #include <linux/icmp.h>
+#include <linux/inet.h>
 #include <linux/icmpv6.h>
 #include <linux/inetdevice.h>
 #include <linux/types.h>
@@ -315,8 +316,8 @@ static void nat64_translate_4to6_deep(struct sk_buff *old_skb, struct bib_entry 
 {
 	struct sk_buff	*skb;
 	struct iphdr	*iph;
-	struct tcphdr	*tcph;
-	struct udphdr	*udph;
+	struct tcphdr	*tcph = NULL;
+	struct udphdr	*udph = NULL;
 	struct in6_addr	remote6;
 	int		skb_len = LL_MAX_HEADER + sizeof(struct ipv6hdr) + sizeof(struct icmphdr) + sizeof(struct ipv6hdr);
 
@@ -680,6 +681,7 @@ unsigned int nat64_ipv4_input(struct sk_buff *skb)
 			return nat64_handle_icmp4(skb, iph);
 			break;
 	}
+	return NF_ACCEPT;
 }
 
 static unsigned int nat64_ipv4_input_wrapper(	unsigned int hooknum,

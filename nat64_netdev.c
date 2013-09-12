@@ -85,7 +85,8 @@ static void nat64_netdev_setup(struct net_device *dev)
 	dev->hard_header_len = 0;
 	dev->addr_len = 0;
 	dev->mtu = ETH_DATA_LEN;
-	dev->features = NETIF_F_NETNS_LOCAL | NETIF_F_NO_CSUM;
+	dev->features = NETIF_F_NETNS_LOCAL;
+// | NETIF_F_NO_CSUM;
 	dev->flags = IFF_NOARP | IFF_POINTOPOINT;
 }
 

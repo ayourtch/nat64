@@ -6,7 +6,7 @@
 
 int tcp_timeout_fsm(struct session_entry *session);
 void tcp4_fsm(struct session_entry *session, struct tcphdr *tcph);
-void tcp6_fsm(struct session_entry *session, struct tcphdr *tcph);
+void tcp6_fsm(struct session_entry *session, const struct tcphdr *tcph);
 
 struct bib_entry *bib_ipv6_lookup(struct in6_addr *remote_addr, __be16 remote_port, int type);
 struct bib_entry *bib_ipv4_lookup(__be32 local_addr, __be16 local_port, int type);
